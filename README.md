@@ -1,5 +1,31 @@
 # Auth Server
 
+## Architektue
+
+```mermaid
+graph LR
+    BF[business-frontend] -- "API Requests" --> BB[business-backend]
+    AF[admin-frontend] -- "API Requests" --> AB[admin-backend]
+    BB -- "API Calls for authentication" --> AS[auth-server]
+    AB -- "Admin operations and login" --> AS
+
+    BB -.-> DB[(Database)]
+    AB -.-> DB[(Database)]
+    AS -.-> DB[(Database)]
+
+    classDef frontend fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef backend fill:#ccf,stroke:#333,stroke-width:2px;
+    classDef database fill:#ffc,stroke:#333,stroke-width:2px;
+    classDef auth fill:#fc9,stroke:#333,stroke-width:2px;
+
+    class BF,AF frontend;
+    class BB,AB backend;
+    class AS auth;
+    class DB database;
+```
+
+<hr>
+
 ## Översikt
 
 ```mermaid
