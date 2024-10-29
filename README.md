@@ -1,6 +1,6 @@
 # Auth Server
 
-## Architektue
+## Arkitektur
 
 ```mermaid
 graph LR
@@ -23,6 +23,33 @@ graph LR
     class AS auth;
     class DB database;
 ```
+
+<hr>
+
+## Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant BF as Business-Frontend
+    participant BB as Business-Backend
+    participant AS as Auth-Server
+    participant DB as Database
+
+    BF->>+BB: Send login credentials (username, password)
+    BB->>+AS: Verify credentials
+    AS->>+DB: Check user credentials in database
+    DB-->>-AS: Return verification result
+    alt credentials valid
+        AS->>+AS: Generate access token
+        AS-->>-BB: Send access token
+        BB->>+BF: Return access token
+        BF->>BF: Store access token and proceed to user session
+    else credentials invalid
+        AS-->>-BB: Send error message
+        BB->>-BF: Relay error message
+    end
+```
+
 
 <hr>
 
