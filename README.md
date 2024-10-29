@@ -71,8 +71,6 @@ classDiagram
         +login()
         +refreshToken()
         +logout()
-        +basicLogin()
-        +customLogin()
     }
 
     class AdminRoutes {
