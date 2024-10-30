@@ -11,10 +11,16 @@ let users = [
         username: "user",
         password: "user"
     },
+    {
+        id: '543d719e-da91-429d-bbaa-8010a9556383',
+        username: "gdpr",
+        password: "gdpr"
+    },
 ];
 let groups = {
     admin: [ '543d719e-da91-429d-bbaa-8010a9556381' ],
-    user: [ '543d719e-da91-429d-bbaa-8010a9556381', '543d719e-da91-429d-bbaa-8010a9556382' ]
+    user: [ '543d719e-da91-429d-bbaa-8010a9556381', '543d719e-da91-429d-bbaa-8010a9556382', '543d719e-da91-429d-bbaa-8010a9556383' ],
+    gdpr: [ '543d719e-da91-429d-bbaa-8010a9556383' ]
 };
 
 exports.addUser = (user) => {
