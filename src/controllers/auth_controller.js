@@ -24,7 +24,6 @@ exports.login = async (req, res) => {
         if (!user) {
             return res.status(401).send({ message: "Authentication failed. User not found." });
         }
-        console.log(await cryptPassword(password));
         const passwordIsValid = await comparepareHashwords(password, user.password);
         if (!passwordIsValid) {
             return res.status(401).send({ message: "Authentication failed. Incorrect password." });

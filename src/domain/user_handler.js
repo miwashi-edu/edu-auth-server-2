@@ -1,4 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
+const {
+    cryptPassword
+} = require('../domain/auth_handler');
 
 let users = [
     {
@@ -25,6 +28,7 @@ let groups = {
 
 exports.addUser = (user) => {
     user.id = uuidv4();
+    user.password = cryptPassword(user.password);
     users.push(user);
     return user;
 };
@@ -40,7 +44,7 @@ exports.getUser = (id) => {
     return users.find(user => user.id === id);
 };
 
-
+//Warning does not work with password change
 exports.updateUser = (id, newUserDetails) => {
     let userIndex = users.findIndex(user => user.id === id);
     if (userIndex !== -1) {
