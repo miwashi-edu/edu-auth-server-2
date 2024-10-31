@@ -1,7 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const {
-    cryptPassword
-} = require('../domain/auth_handler');
+const authHandler = require('./auth_handler');
 
 let users = [
     {
@@ -28,16 +26,9 @@ let groups = {
 
 exports.addUser = (user) => {
     user.id = uuidv4();
-    user.password = cryptPassword(user.password);
+    user.password = authHandler.cryptPassword(user.password);
     users.push(user);
     return user;
-};
-
-exports.getUsers = () => {
-    return users.map(user => ({
-        ...user,
-        groups: getUserGroups(user.id)
-    }));
 };
 
 exports.getUser = (id) => {
@@ -123,4 +114,11 @@ exports.removeUserFromGroup = (userId, groupName) => {
 
 exports.getUserByUsername = (username) => {
     return users.find(user => user.username === username);
+};
+
+exports.getUsers = () => {
+    return users.map(user => ({
+        ...user,
+        groups: Object.keys(groups).filter(groupName => groups[groupName].includes(user.id))
+    }));
 };

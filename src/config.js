@@ -9,7 +9,7 @@ let DEFAULT_SECURE = true;
 let DEFAULT_HTTP_ONLY = true;
 let DEFAULT_SAME_SITE = 'Strict';
 let DEFAULT_CORS_ALLOWED_ORIGINS = ['http://localhost:3000', DOCKER_NETWORK_RANGE_REGEXP];
-let DEFAULT_API_DOCS = false;
+let DEFAULT_API_DOCS = 'false';
 // Problematic
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -26,7 +26,7 @@ if (ENV === 'development') {
     DEFAULT_CORS_ALLOWED_ORIGINS = process.env.CORS_ALLOWED_ORIGINS
         ? process.env.CORS_ALLOWED_ORIGINS.split(',')
         : DEFAULT_CORS_ALLOWED_ORIGINS;
-    DEFAULT_API_DOCS = process.env.API_DOCS || DEFAULT_API_DOCS;
+    DEFAULT_API_DOCS = (process.env.API_DOCS || DEFAULT_API_DOCS) === 'true';
 }
 
 // Enforce secrets presence

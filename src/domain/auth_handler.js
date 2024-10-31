@@ -39,7 +39,10 @@ exports.validateRefreshToken = (token) => {
 };
 
 exports.cryptPassword = async (plainPassword) => {
-    const saltRounds = 10;  // Salt rounds determine the cost factor of the hashing
+    const saltRounds = 10;
+    if (!plainPassword) {
+        throw new Error("Plain password is required");
+    }
     const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
     return hashedPassword;
 }

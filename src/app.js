@@ -49,14 +49,23 @@ app.use(cors({
 app.use(helmet.contentSecurityPolicy(
     {
         directives: {
-            defaultSrc: ["'self'"],  // Restricts all resources to the same origin
-            scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"], // Allows scripts from same origin, inline scripts, and Swagger CDN
-            styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"], // Allows styles from same origin, inline styles, and Swagger CDN
-            imgSrc: ["'self'", "data:"], // Allows images from same origin and data URIs for embedded images
-            connectSrc: ["'self'"], // Restricts XHR/fetch connections to the same origin, needed by Swagger UI
-            objectSrc: ["'none'"] // Disallows <object>, <embed>, and <applet> elements for security
+            defaultSrc: ["'self'"],                  // Default policy: restricts all resources to same origin
+            scriptSrc: ["'self'", "'nonce-<unique-token>'", "'strict-dynamic'"], // Only allow trusted inline scripts and dynamic scripts with nonce
+            styleSrc: ["'self'", "'nonce-<unique-token>'"], // Only allow trusted inline styles with nonce
+            imgSrc: ["'self'"],                      // Allows images only from same origin, blocking external and data URIs
+            fontSrc: ["'self'"],                     // Only load fonts from same origin, improving font security
+            objectSrc: ["'none'"],                   // Blocks <object>, <embed>, and <applet> elements for security
+            frameAncestors: ["'none'"],              // Prevents your content from being embedded in iframes (clickjacking protection)
+            baseUri: ["'self'"],                     // Limits base URL changes to prevent base URI manipulations
+            formAction: ["'self'"],                  // Restricts form submissions to your origin (CSRF protection)
+            mediaSrc: ["'self'"],                    // Only allows media files from same origin to block unauthorized media
+            workerSrc: ["'self'"],                   // Only allows web workers and service workers from your origin
+            requireTrustedTypesFor: ["'script'"],    // Enforces Trusted Types for scripts to prevent DOM-based XSS
+            reportUri: "/csp-report",                // Sets endpoint to log CSP violations for monitoring and debugging
+            connectSrc: ["'self'"],
+            upgradeInsecureRequests: []              // Automatically upgrades HTTP requests to HTTPS for secure connections
         },
-        hsts: false,
+        hsts: false, // Disables HTTP Strict Transport Security; enable if all resources are served over HTTPS
     }
 ));
 
@@ -72,6 +81,10 @@ if(API_DOCS) {
     });
     const swaggerDocs = swaggerJsDoc(swaggerOptions);
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+}else{
+    app.get('/', (req, res) => {
+        res.json({});
+    });
 }
 
 app.use('/api/auth', require('./routes/auth_routes'));
