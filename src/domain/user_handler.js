@@ -4,17 +4,17 @@ let users = [
     {
         id: '543d719e-da91-429d-bbaa-8010a9556381',
         username: "admin",
-        password: "admin"
+        password: "$2b$10$H3fuKg7oVfRIAHfGhP.riOiAJ1buARooRUU61wD1FxT0eVoLWIKJG"
     },
     {
         id: '543d719e-da91-429d-bbaa-8010a9556382',
         username: "user",
-        password: "user"
+        password: "$2b$10$G.oUiUVQFOgLejSiV0uALeu4e72zvizj6FOOtdyXFk1HgDS1lDtSO"
     },
     {
         id: '543d719e-da91-429d-bbaa-8010a9556383',
         username: "gdpr",
-        password: "gdpr"
+        password: "$2b$10$AgA8W4RDTASLM7H877.lvOWrzLLnC6s866iNMMVODNddfasMOK2S6"
     },
 ];
 let groups = {
@@ -82,7 +82,7 @@ exports.deleteGroup = (groupName) => {
     return false;
 };
 
-const getUserGroups = (userId) => {
+exports.getUserGroups = (userId) => {
     return Object.keys(groups).filter(groupName => groups[groupName].includes(userId));
 };
 

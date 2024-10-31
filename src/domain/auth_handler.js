@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const {getUserGroups} = require('./user_handler');
+const bcrypt = require("bcrypt");
 
 const SECRET_KEY = 'your_secret_key';  // Secret key for JWT signing
 const REFRESH_SECRET_KEY = 'your_refresh_secret_key';  // Separate secret for refresh token
@@ -36,3 +37,13 @@ exports.validateRefreshToken = (token) => {
         return null;
     }
 };
+
+exports.cryptPassword = async (plainPassword) => {
+    const saltRounds = 10;  // Salt rounds determine the cost factor of the hashing
+    const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+    return hashedPassword;
+}
+
+exports.comparepareHashwords = async (outside, inside) => {
+    return await bcrypt.compare(outside, inside);
+}

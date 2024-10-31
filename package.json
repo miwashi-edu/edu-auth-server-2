@@ -7,7 +7,7 @@
     "test:component": "jest --group=component",
     "test:integration": "jest --group=integration",
     "main": "node ./service.js",
-    "dev": "node --watch ./src/service.js",
+    "dev": "NODE_ENV=development node --watch ./src/service.js",
     "start": "node ./src/service.js",
     "start:prod": "NODE_ENV=production node ./src/service.js"
   },
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "helmet": "^8.0.0",

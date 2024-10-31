@@ -3,8 +3,9 @@ const {
 } = require("../config");
 const {
     generateAccessToken, generateRefreshToken, generateCsrfToken,
-    validateRefreshToken
+    validateRefreshToken, comparepareHashwords, cryptPassword
 } = require('../domain/auth_handler');
+const {getUserByUsername} = require('../domain/user_handler');
 
 
 /**
@@ -23,8 +24,8 @@ exports.login = async (req, res) => {
         if (!user) {
             return res.status(401).send({ message: "Authentication failed. User not found." });
         }
-
-        const passwordIsValid = await bcrypt.compare(password, user.password);
+        console.log(await cryptPassword(password));
+        const passwordIsValid = await comparepareHashwords(password, user.password);
         if (!passwordIsValid) {
             return res.status(401).send({ message: "Authentication failed. Incorrect password." });
         }
