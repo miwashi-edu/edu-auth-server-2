@@ -24,7 +24,7 @@ app.use(helmet({
     xssFilter: false                         // Disables X-XSS-Protection header, which provides basic XSS protection in older browsers
 }));
 
-
+app.use(helmet.hidePoweredBy());
 app.use(helmet.hsts({
     maxAge: 15552000,
     includeSubDomains: true,
